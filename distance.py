@@ -39,8 +39,8 @@ def encodings_from_words(words):
 def dtw(encodings, save=False):
     num_features = len(encodings)
     norm_distance_mat = np.zeros((num_features, num_features))
-    encodings = [f.cpu().numpy().astype(np.float64) for f in encodings]
-
+    encodings = [f.astype(np.float64) for f in encodings]
+    print(encodings[0].shape)
     for i in tqdm(range(num_features), desc="Calculating Distances"):
         dists_i = Parallel(n_jobs=8)(
             delayed(dtw_sweep_min)(encodings[i], encodings[j])
